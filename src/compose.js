@@ -9,6 +9,12 @@
  * (...args) => f(g(h(...args))).
  */
 
+/**
+ * compose 是一个高阶函数，包含了函数式思想。
+ * 之前一个函数的返回值，是下一个函数的参数
+ * 最终返回最后一个函数的返回值。
+ */
+
 export default function compose(...funcs) {
   if (funcs.length === 0) {
     return arg => arg
