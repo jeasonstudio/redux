@@ -1,4 +1,6 @@
+// 导入 lodash/isPlainObject 判断是否是 plain 对象?
 import isPlainObject from 'lodash/isPlainObject'
+// observable
 import $$observable from 'symbol-observable'
 
 /**
@@ -6,6 +8,11 @@ import $$observable from 'symbol-observable'
  * For any unknown actions, you must return the current state.
  * If the current state is undefined, you must return the initial state.
  * Do not reference these action types directly in your code.
+ */
+
+/**
+ * 这是 redux 的私有 action，@@redux/INIT
+ * 任何未知的 action 将返回原有 state ( state !== undefined )
  */
 export const ActionTypes = {
   INIT: '@@redux/INIT'
@@ -18,6 +25,12 @@ export const ActionTypes = {
  * There should only be a single store in your app. To specify how different
  * parts of the state tree respond to actions, you may combine several reducers
  * into a single reducer function by using `combineReducers`.
+ *
+ * 创建 store => state 树
+ * 修改 state 的唯一方式是调用 dispatch() 方法。
+ *
+ * 一个 web app 只能拥有一个 store ，使用 combineReducers 方法
+ * 将多个 reducer 合并成一个 reucer
  *
  * @param {Function} reducer A function that returns the next state tree, given
  * the current state tree and the action to handle.
@@ -128,6 +141,8 @@ export default function createStore(reducer, preloadedState, enhancer) {
    * current state tree and the given `action`. Its return value will
    * be considered the **next** state of the tree, and the change listeners
    * will be notified.
+   *
+   * dispatch 一个 action 这是修改 state 的唯一方式。
    *
    * The base implementation only supports plain object actions. If you want to
    * dispatch a Promise, an Observable, a thunk, or something else, you need to
@@ -242,6 +257,10 @@ export default function createStore(reducer, preloadedState, enhancer) {
   // When a store is created, an "INIT" action is dispatched so that every
   // reducer returns their initial state. This effectively populates
   // the initial state tree.
+  /**
+   * store 被 create 出来后，redux 会自动 dispatch 一个 type 为 'INIT' 的 action
+   * reducer 返回初始化后的 state。
+   */
   dispatch({ type: ActionTypes.INIT })
 
   return {
